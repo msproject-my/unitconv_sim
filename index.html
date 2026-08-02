@@ -32,7 +32,7 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* Blank Fill-in-the-blanks Input Styling */
+    /* Blank Input Styling */
     .blank-input {
       background: #FFFFFF;
       border: 2px dashed #38BDF8;
@@ -58,17 +58,17 @@
       box-shadow: inset 0 2px 8px rgba(0,0,0,0.04);
     }
     .fraction-line {
-      height: 4px;
+      height: 3px;
       background: linear-gradient(90deg, #38BDF8, #F97316, #E11D48);
       border-radius: 2px;
     }
     .track-rail-vertical {
-      width: 4px;
+      width: 3px;
       background: #38BDF8;
       opacity: 0.6;
     }
 
-    /* Unit Cancellation Strikethrough Effect */
+    /* Unit Cancellation Strikethrough */
     .unit-cancel {
       position: relative;
       display: inline-block;
@@ -87,82 +87,81 @@
     }
   </style>
 </head>
-<body class="min-h-screen p-2 md:p-4 flex flex-col items-center justify-start">
+<body class="h-screen max-h-screen p-2 md:p-3 flex flex-col justify-between overflow-hidden">
 
   <!-- Main Header -->
-  <header class="w-full max-w-5xl text-center my-2">
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0284C7]/10 border border-[#0284C7]/30 text-[#0284C7] text-xs font-black uppercase tracking-wider mb-1 shadow-sm">
+  <header class="w-full max-w-5xl text-center mx-auto my-0.5">
+    <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#0284C7]/10 border border-[#0284C7]/30 text-[#0284C7] text-[10px] font-black uppercase tracking-wider shadow-sm">
       <span>🚂 SI Prefixes & Compound Unit Conversion</span>
     </div>
-    <h1 class="text-2xl md:text-4xl font-black text-[#0284C7] tracking-tight uppercase drop-shadow-sm">
+    <h1 class="text-xl md:text-2xl font-black text-[#0284C7] tracking-tight uppercase drop-shadow-sm leading-tight">
       Unit Conversion Simulator
     </h1>
-    <p class="text-[#1E293B]/70 text-xs md:text-sm mt-0.5 font-bold">
+    <p class="text-[#1E293B]/70 text-[11px] font-bold">
       Convert SI Prefixes (k, M, G, m, c) and powers of units step-by-step using whole numbers!
     </p>
   </header>
 
   <!-- Main App Board -->
-  <main class="w-full max-w-5xl bg-white border-2 border-[#38BDF8]/30 rounded-2xl p-3 md:p-5 shadow-xl flex flex-col gap-4">
+  <main class="w-full max-w-5xl mx-auto flex-1 bg-white border-2 border-[#38BDF8]/30 rounded-2xl p-2 md:p-3 shadow-xl flex flex-col justify-between gap-2 overflow-hidden">
 
     <!-- ROW 1: QUESTION (FILL-IN-THE-BLANKS) -->
-    <section class="bg-[#FFF8E7] border-2 border-[#F97316]/30 rounded-xl p-3 md:p-4 relative overflow-hidden shadow-sm">
-      <div class="absolute top-0 left-0 bg-[#0284C7] text-white font-extrabold text-[11px] px-3 py-1 rounded-br-lg uppercase tracking-wider">
+    <section class="bg-[#FFF8E7] border-2 border-[#F97316]/30 rounded-xl p-2 md:p-3 relative overflow-hidden shadow-sm flex-1 flex flex-col justify-between">
+      <div class="absolute top-0 left-0 bg-[#0284C7] text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-br-lg uppercase tracking-wider">
         1. Question (Fill-in-the-Blanks)
       </div>
 
-      <div class="mt-4 flex flex-col lg:flex-row items-center justify-between gap-4">
-        
+      <div class="mt-2.5 flex-1 flex flex-col justify-center">
         <!-- Question Formula Inputs -->
-        <div class="flex flex-wrap items-center justify-center gap-2 md:gap-3 w-full text-base md:text-xl font-bold">
-          <span class="text-[#0284C7] font-black text-lg md:text-2xl mr-1 uppercase">Question :</span>
+        <div class="flex flex-wrap items-center justify-center gap-1.5 md:gap-2 w-full text-sm md:text-base font-bold">
+          <span class="text-[#0284C7] font-black text-base md:text-lg mr-0.5 uppercase">Question :</span>
 
           <!-- Input Value -->
           <div class="flex flex-col items-center">
             <input type="number" id="inputNum" placeholder="20" value="20" step="any"
-              class="blank-input w-20 md:w-28 py-1.5 px-2 rounded-xl font-bold text-lg md:text-2xl mono shadow-sm"
+              class="blank-input w-16 md:w-20 py-1 px-1.5 rounded-lg font-bold text-base md:text-lg mono shadow-sm"
               title="Enter value">
-            <span class="text-[10px] text-[#1E293B]/70 mt-0.5 font-semibold">[ Value ]</span>
+            <span class="text-[9px] text-[#1E293B]/70 mt-0.5 font-semibold">[ Value ]</span>
           </div>
 
           <!-- Top Unit (Original) -->
           <div class="flex flex-col items-center">
             <div class="flex items-start">
               <input type="text" id="inputUnitTop" placeholder="N" value="N"
-                class="blank-input w-16 md:w-20 py-1.5 px-2 rounded-xl font-bold text-base md:text-xl shadow-sm"
+                class="blank-input w-12 md:w-16 py-1 px-1.5 rounded-lg font-bold text-sm md:text-base shadow-sm"
                 title="Enter numerator unit">
               <!-- Top Power -->
               <div class="flex flex-col ml-0.5">
                 <input type="text" id="inputPowerTop" placeholder="1" value="1"
-                  class="blank-input w-8 md:w-10 py-0.5 px-1 rounded-lg text-xs font-bold text-[#E11D48] border-[#E11D48]/40"
+                  class="blank-input w-7 md:w-8 py-0.5 px-0.5 rounded text-[10px] font-bold text-[#E11D48] border-[#E11D48]/40"
                   title="Unit power">
-                <span class="text-[8px] text-[#E11D48] font-bold">power</span>
+                <span class="text-[7px] text-[#E11D48] font-bold">power</span>
               </div>
             </div>
-            <span class="text-[10px] text-[#1E293B]/70 mt-0.5 font-semibold">[ Original Unit ]</span>
+            <span class="text-[9px] text-[#1E293B]/70 mt-0.5 font-semibold">[ Original Unit ]</span>
           </div>
 
           <!-- Divider Slash -->
-          <span class="text-[#F97316] font-light text-2xl self-center px-1">/</span>
+          <span class="text-[#F97316] font-light text-xl self-center px-0.5">/</span>
 
           <!-- Bottom Unit (Original - Optional) -->
           <div class="flex flex-col items-center">
             <div class="flex items-start">
               <input type="text" id="inputUnitBot" placeholder="m" value="m"
-                class="blank-input w-16 md:w-20 py-1.5 px-2 rounded-xl font-bold text-base md:text-xl text-[#F97316] border-[#F97316]/40 shadow-sm"
+                class="blank-input w-12 md:w-16 py-1 px-1.5 rounded-lg font-bold text-sm md:text-base text-[#F97316] border-[#F97316]/40 shadow-sm"
                 title="Optional denominator unit">
               <div class="flex flex-col ml-0.5">
                 <input type="text" id="inputPowerBot" placeholder="2" value="2"
-                  class="blank-input w-8 md:w-10 py-0.5 px-1 rounded-lg text-xs font-bold text-[#F97316] border-[#F97316]/40"
+                  class="blank-input w-7 md:w-8 py-0.5 px-0.5 rounded text-[10px] font-bold text-[#F97316] border-[#F97316]/40"
                   title="Denominator unit power">
-                <span class="text-[8px] text-[#F97316] font-bold">power</span>
+                <span class="text-[7px] text-[#F97316] font-bold">power</span>
               </div>
             </div>
-            <span class="text-[10px] text-[#1E293B]/70 mt-0.5 font-semibold">[ Bottom Unit ]</span>
+            <span class="text-[9px] text-[#1E293B]/70 mt-0.5 font-semibold">[ Bottom Unit ]</span>
           </div>
 
           <!-- Conversion Arrow -->
-          <div class="flex items-center mx-2 text-[#E11D48] animate-pulse text-2xl md:text-3xl font-black">
+          <div class="flex items-center mx-1 text-[#E11D48] animate-pulse text-xl md:text-2xl font-black">
             ➔
           </div>
 
@@ -170,35 +169,35 @@
           <div class="flex flex-col items-center">
             <div class="flex items-start">
               <input type="text" id="targetUnitTop" placeholder="kN" value="kN"
-                class="blank-input w-16 md:w-20 py-1.5 px-2 rounded-xl font-bold text-base md:text-xl text-[#0D9488] border-[#0D9488]/40 shadow-sm"
+                class="blank-input w-12 md:w-16 py-1 px-1.5 rounded-lg font-bold text-sm md:text-base text-[#0D9488] border-[#0D9488]/40 shadow-sm"
                 title="Enter target unit">
               <!-- Target Power -->
               <div class="flex flex-col ml-0.5">
                 <input type="text" id="targetPowerTop" placeholder="1" value="1"
-                  class="blank-input w-8 md:w-10 py-0.5 px-1 rounded-lg text-xs font-bold text-[#0D9488] border-[#0D9488]/40"
+                  class="blank-input w-7 md:w-8 py-0.5 px-0.5 rounded text-[10px] font-bold text-[#0D9488] border-[#0D9488]/40"
                   title="Target unit power">
-                <span class="text-[8px] text-[#0D9488] font-bold">power</span>
+                <span class="text-[7px] text-[#0D9488] font-bold">power</span>
               </div>
             </div>
-            <span class="text-[10px] text-[#1E293B]/70 mt-0.5 font-semibold">[ Target Top ]</span>
+            <span class="text-[9px] text-[#1E293B]/70 mt-0.5 font-semibold">[ Target Top ]</span>
           </div>
 
-          <span class="text-[#0D9488] font-light text-2xl self-center px-1">/</span>
+          <span class="text-[#0D9488] font-light text-xl self-center px-0.5">/</span>
 
           <!-- Target Bottom Unit (Optional) -->
           <div class="flex flex-col items-center">
             <div class="flex items-start">
               <input type="text" id="targetUnitBot" placeholder="m" value="m"
-                class="blank-input w-16 md:w-20 py-1.5 px-2 rounded-xl font-bold text-base md:text-xl text-[#0D9488] border-[#0D9488]/40 shadow-sm"
+                class="blank-input w-12 md:w-16 py-1 px-1.5 rounded-lg font-bold text-sm md:text-base text-[#0D9488] border-[#0D9488]/40 shadow-sm"
                 title="Optional target bottom unit">
               <div class="flex flex-col ml-0.5">
                 <input type="text" id="targetPowerBot" placeholder="2" value="2"
-                  class="blank-input w-8 md:w-10 py-0.5 px-1 rounded-lg text-xs font-bold text-[#0D9488] border-[#0D9488]/40"
+                  class="blank-input w-7 md:w-8 py-0.5 px-0.5 rounded text-[10px] font-bold text-[#0D9488] border-[#0D9488]/40"
                   title="Target bottom power">
-                <span class="text-[8px] text-[#0D9488] font-bold">power</span>
+                <span class="text-[7px] text-[#0D9488] font-bold">power</span>
               </div>
             </div>
-            <span class="text-[10px] text-[#1E293B]/70 mt-0.5 font-semibold">[ Target Bottom ]</span>
+            <span class="text-[9px] text-[#1E293B]/70 mt-0.5 font-semibold">[ Target Bottom ]</span>
           </div>
 
         </div>
@@ -206,38 +205,41 @@
       </div>
 
       <!-- Control Bar -->
-      <div class="mt-4 flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-[#F97316]/20">
+      <div class="mt-1 flex flex-wrap items-center justify-between gap-1.5 pt-1 border-t border-[#F97316]/20">
         <!-- Preset Example Buttons -->
-        <div class="flex flex-wrap items-center gap-1.5">
-          <span class="text-xs text-[#1E293B]/70 font-bold uppercase">Sample Problems:</span>
+        <div class="flex flex-wrap items-center gap-1">
+          <span class="text-[10px] text-[#1E293B]/70 font-bold uppercase">Sample Problems:</span>
           <button onclick="loadExample('20', 'N', '1', 'm', '2', 'kN', '1', 'm', '2')" 
-            class="text-xs px-2.5 py-0.5 rounded-md bg-[#0284C7] text-white font-bold hover:bg-[#0369A1] shadow-sm transition">
+            class="text-[10px] px-2 py-0.5 rounded bg-[#0284C7] text-white font-bold hover:bg-[#0369A1] shadow-sm transition">
             20 N/m² ➔ kN/m²
           </button>
           <button onclick="loadExample('98', 'kN', '1', 'm', '2', 'N', '1', 'cm', '2')" 
-            class="text-xs px-2.5 py-0.5 rounded-md bg-white border border-[#0284C7] text-[#0284C7] font-bold hover:bg-[#FFF8E7] transition">
+            class="text-[10px] px-2 py-0.5 rounded bg-white border border-[#0284C7] text-[#0284C7] font-bold hover:bg-[#FFF8E7] transition">
             98 kN/m² ➔ N/cm²
           </button>
           <button onclick="loadExample('500', 'm', '1', 's', '2', 'km', '1', 'h', '2')" 
-            class="text-xs px-2.5 py-0.5 rounded-md bg-white border border-[#0284C7] text-[#0284C7] font-bold hover:bg-[#FFF8E7] transition">
+            class="text-[10px] px-2 py-0.5 rounded bg-white border border-[#0284C7] text-[#0284C7] font-bold hover:bg-[#FFF8E7] transition">
             500 m/s² ➔ km/h²
           </button>
           <button onclick="loadExample('2', 'km', '1', '', '', 'mm', '1', '', '')" 
-            class="text-xs px-2.5 py-0.5 rounded-md bg-white border border-[#0284C7] text-[#0284C7] font-bold hover:bg-[#FFF8E7] transition">
+            class="text-[10px] px-2 py-0.5 rounded bg-white border border-[#0284C7] text-[#0284C7] font-bold hover:bg-[#FFF8E7] transition">
             2 km ➔ mm
           </button>
           <button onclick="loadExample('100', 'um', '1', '', '', 'm', '1', '', '')" 
-            class="text-xs px-2.5 py-0.5 rounded-md bg-white border border-[#0284C7] text-[#0284C7] font-bold hover:bg-[#FFF8E7] transition">
+            class="text-[10px] px-2 py-0.5 rounded bg-white border border-[#0284C7] text-[#0284C7] font-bold hover:bg-[#FFF8E7] transition">
             100 μm ➔ m
           </button>
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex items-center gap-2 ml-auto">
-          <button onclick="resetInputs()" class="px-2.5 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-[#1E293B] text-xs font-bold transition">
+        <div class="flex items-center gap-1.5 ml-auto">
+          <button onclick="Manual.png()" class="px-2.5 py-1 rounded-lg bg-[#0D9488] hover:bg-[#0F766E] text-white text-[10px] font-bold shadow-sm transition flex items-center gap-1 cursor-pointer">
+            📖 Manual
+          </button>
+          <button onclick="resetInputs()" class="px-2.5 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-[#1E293B] text-[10px] font-bold transition">
             🧹 Clear
           </button>
-          <button onclick="generateTrackFromInputs()" class="px-4 py-1.5 rounded-lg bg-[#0284C7] hover:bg-[#0369A1] text-white font-extrabold text-xs shadow-md active:scale-95 transition flex items-center gap-1.5 uppercase tracking-wide">
+          <button onclick="generateTrackFromInputs()" class="px-3.5 py-1 rounded-lg bg-[#0284C7] hover:bg-[#0369A1] text-white font-extrabold text-[11px] shadow-md active:scale-95 transition flex items-center gap-1 uppercase tracking-wide">
             <span>🚀 Generate Track</span>
           </button>
         </div>
@@ -245,62 +247,62 @@
     </section>
 
     <!-- ROW 2: TRACK METHOD (RAILROAD TRACK VISUAL) -->
-    <section class="bg-[#FFF8E7]/50 border-2 border-[#0D9488]/30 rounded-xl p-3 md:p-4 relative">
-      <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-        <div class="bg-[#0284C7] text-white font-extrabold text-[11px] px-3 py-1 rounded-lg uppercase tracking-wider shadow-sm">
+    <section class="bg-[#FFF8E7]/50 border-2 border-[#0D9488]/30 rounded-xl p-2 md:p-3 relative flex-1 flex flex-col justify-between overflow-hidden">
+      <div class="flex flex-wrap items-center justify-between gap-1 mb-1">
+        <div class="bg-[#0284C7] text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg uppercase tracking-wider shadow-sm">
           2. Track Method (Prefix Conversion Grid)
         </div>
         
         <!-- Track Number Display Toggle -->
-        <div class="flex items-center gap-2 bg-white p-1 rounded-lg border border-[#0284C7]/30 text-xs shadow-sm">
-          <span class="text-[#1E293B]/70 px-2 font-bold text-[11px]">Track Number Format:</span>
-          <button id="btnFormatExpanded" onclick="setNumberFormat('expanded')" class="px-2.5 py-0.5 rounded-md font-bold text-xs bg-[#0284C7] text-white transition">
+        <div class="flex items-center gap-1 bg-white p-0.5 rounded-lg border border-[#0284C7]/30 text-[10px] shadow-sm">
+          <span class="text-[#1E293B]/70 px-1.5 font-bold text-[10px]">Format:</span>
+          <button id="btnFormatExpanded" onclick="setNumberFormat('expanded')" class="px-2 py-0.5 rounded font-bold text-[10px] bg-[#0284C7] text-white transition">
             Expanded (1000)
           </button>
-          <button id="btnFormatExponent" onclick="setNumberFormat('exponent')" class="px-2.5 py-0.5 rounded-md font-bold text-xs text-[#1E293B]/70 hover:text-[#0284C7] transition">
+          <button id="btnFormatExponent" onclick="setNumberFormat('exponent')" class="px-2 py-0.5 rounded font-bold text-[10px] text-[#1E293B]/70 hover:text-[#0284C7] transition">
             Powers of 10 (10³)
           </button>
         </div>
       </div>
 
       <!-- Railroad Track Outer Container -->
-      <div class="track-container rounded-xl p-2 md:p-3 overflow-x-auto border-2 border-[#38BDF8]/30 min-h-[130px] flex items-center justify-center">
-        <div id="trackVisual" class="flex items-center justify-start min-w-max py-1 px-2">
+      <div class="track-container rounded-xl p-1.5 md:p-2 overflow-x-auto border-2 border-[#38BDF8]/30 flex-1 flex items-center justify-center min-h-[80px]">
+        <div id="trackVisual" class="flex items-center justify-start min-w-max py-0.5 px-1">
           <!-- Dynamically generated tracks via JavaScript -->
         </div>
       </div>
 
       <!-- Legend -->
-      <div class="mt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#1E293B]/80">
-        <div class="flex items-center gap-2 font-semibold">
-          <span class="inline-block w-3 h-3 rounded-full bg-[#E11D48]"></span>
+      <div class="mt-1 flex flex-wrap items-center justify-between gap-1 text-[10px] text-[#1E293B]/80">
+        <div class="flex items-center gap-1.5 font-semibold">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-[#E11D48]"></span>
           <span>Red line indicates <b>Cancelled Units</b>. All factor terms use whole numbers without decimals!</span>
         </div>
       </div>
     </section>
 
     <!-- ROW 3: FINAL ANSWER -->
-    <section class="bg-[#FFF8E7] border-2 border-[#0D9488]/30 rounded-xl p-3 md:p-4 relative">
-      <div class="bg-[#0D9488] text-white font-extrabold text-[11px] px-3 py-1 rounded-br-lg uppercase tracking-wider absolute top-0 left-0">
+    <section class="bg-[#FFF8E7] border-2 border-[#0D9488]/30 rounded-xl p-2 md:p-3 relative flex-1 flex flex-col justify-between">
+      <div class="bg-[#0D9488] text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-br-lg uppercase tracking-wider absolute top-0 left-0">
         3. Final Answer
       </div>
 
-      <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+      <div class="mt-2.5 flex-1 grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-3 items-center">
         
         <!-- Multiplication Equation -->
-        <div class="md:col-span-2 bg-white rounded-xl p-3 border border-[#0D9488]/30 flex flex-col gap-2 shadow-sm">
-          <span class="text-[11px] text-[#1E293B]/70 font-extrabold uppercase tracking-wider">Track Multiplication Equation:</span>
+        <div class="md:col-span-2 h-full bg-white rounded-xl p-2 border border-[#0D9488]/30 flex flex-col justify-center gap-1 shadow-sm">
+          <span class="text-[10px] text-[#1E293B]/70 font-extrabold uppercase tracking-wider">Track Multiplication Equation:</span>
           
-          <div class="flex items-center gap-3 text-sm md:text-base mono overflow-x-auto pb-0.5">
+          <div class="flex items-center gap-2 text-xs md:text-sm mono overflow-x-auto pb-0.5">
             <span class="text-[#1E293B] font-bold">Result =</span>
             
             <div class="flex flex-col items-center">
               <!-- Top Numerator Multiplication -->
-              <div id="mathNumerator" class="text-[#0284C7] font-extrabold px-2 py-0.5 border-b-2 border-[#1E293B]/20">
+              <div id="mathNumerator" class="text-[#0284C7] font-extrabold px-1.5 py-0.5 border-b-2 border-[#1E293B]/20">
                 20 × 1
               </div>
               <!-- Bottom Denominator Multiplication -->
-              <div id="mathDenominator" class="text-[#F97316] font-extrabold px-2 py-0.5">
+              <div id="mathDenominator" class="text-[#F97316] font-extrabold px-1.5 py-0.5">
                 1 × 1000
               </div>
             </div>
@@ -308,24 +310,24 @@
             <span class="text-[#1E293B] font-bold">=</span>
 
             <div class="flex flex-col items-center">
-              <span id="mathRawTop" class="text-[#0284C7] font-mono text-xs font-bold">20</span>
-              <span class="w-full h-[2px] bg-[#1E293B]/30"></span>
-              <span id="mathRawBot" class="text-[#F97316] font-mono text-xs font-bold">1,000</span>
+              <span id="mathRawTop" class="text-[#0284C7] font-mono text-[11px] font-bold">20</span>
+              <span class="w-full h-[1.5px] bg-[#1E293B]/30"></span>
+              <span id="mathRawBot" class="text-[#F97316] font-mono text-[11px] font-bold">1,000</span>
             </div>
           </div>
         </div>
 
         <!-- Final Answer Box -->
-        <div class="bg-gradient-to-br from-[#E6FFFA] to-[#FEF08A]/40 border-2 border-[#0D9488] rounded-xl p-3 text-center shadow-md flex flex-col items-center justify-center">
-          <span class="text-[11px] text-[#0D9488] font-black uppercase tracking-widest mb-0.5">Final Answer</span>
+        <div class="h-full bg-gradient-to-br from-[#E6FFFA] to-[#FEF08A]/40 border-2 border-[#0D9488] rounded-xl p-2 md:p-2.5 text-center shadow-md flex flex-col items-center justify-center">
+          <span class="text-[10px] text-[#0D9488] font-black uppercase tracking-widest mb-0.5">Final Answer</span>
           
           <!-- Primary Answer -->
-          <div id="finalAnswerBox" class="text-xl md:text-2xl font-black text-[#1E293B] mono my-0.5">
+          <div id="finalAnswerBox" class="text-lg md:text-xl font-black text-[#1E293B] mono my-0.5">
             0.02 kN/m²
           </div>
 
           <!-- Scientific Notation -->
-          <div id="finalScientificBox" class="text-xs text-[#0D9488] mono mt-0.5 font-bold">
+          <div id="finalScientificBox" class="text-[10px] text-[#0D9488] mono mt-0.5 font-bold">
             ( 2 × 10⁻² kN/m² )
           </div>
         </div>
@@ -336,12 +338,98 @@
   </main>
 
   <!-- Footer -->
-  <footer class="mt-4 text-center text-xs text-[#1E293B]/70 font-bold">
+  <footer class="my-0.5 text-center text-[10px] text-[#1E293B]/70 font-bold">
     <p>Unit Conversion Simulator • Soft Infographic Pastel Theme</p>
   </footer>
 
+  <!-- User Manual Modal -->
+  <div id="manualModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-3 md:p-6">
+    <div class="bg-white border-2 border-[#0D9488] rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 md:p-6 shadow-2xl relative flex flex-col gap-4">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">📖</span>
+          <h2 class="text-base md:text-lg font-black text-[#0284C7] uppercase tracking-tight">Panduan Pengguna / User Manual</h2>
+        </div>
+        <button onclick="closeManualModal()" class="w-7 h-7 flex items-center justify-center rounded-full bg-slate-100 hover:bg-rose-100 text-slate-500 hover:text-rose-600 font-bold text-sm transition">
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Body (Steps) -->
+      <div class="flex flex-col gap-3 text-xs text-[#1E293B] leading-relaxed">
+        
+        <!-- Step 1 -->
+        <div class="bg-[#FFF8E7] p-3 rounded-xl border border-[#F97316]/30 flex flex-col gap-1">
+          <span class="font-black text-[#0284C7] uppercase flex items-center gap-1">
+            <span class="bg-[#0284C7] text-white px-1.5 py-0.5 rounded text-[10px]">1</span> 
+            Langkah 1: Masukkan Soalan (Fill-in-the-Blanks)
+          </span>
+          <p class="text-[11px] text-slate-600">
+            Isikan petak kosong soalan di Seksyen 1 dari kiri ke kanan:
+          </p>
+          <ul class="list-disc list-inside text-[11px] text-slate-700 font-medium pl-1 space-y-0.5">
+            <li><b>Value:</b> Nilai nombor soalan (cth: <code class="bg-white px-1 rounded border">20</code>, <code class="bg-white px-1 rounded border">100</code>).</li>
+            <li><b>Original Unit & Power:</b> Unit bahagian atas & kuasanya (cth: <code class="bg-white px-1 rounded border">N</code>, <code class="bg-white px-1 rounded border">1</code> atau <code class="bg-white px-1 rounded border">μm</code>).</li>
+            <li><b>Bottom Unit & Power:</b> Unit bahagian bawah (jika ada, cth: <code class="bg-white px-1 rounded border">m</code>, <code class="bg-white px-1 rounded border">2</code>).</li>
+            <li><b>Target Top & Bottom:</b> Unit sasaran yang ingin ditukar (cth: <code class="bg-white px-1 rounded border">kN/m²</code>).</li>
+          </ul>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-[#FFF8E7]/60 p-3 rounded-xl border border-[#0D9488]/30 flex flex-col gap-1">
+          <span class="font-black text-[#0D9488] uppercase flex items-center gap-1">
+            <span class="bg-[#0D9488] text-white px-1.5 py-0.5 rounded text-[10px]">2</span> 
+            Langkah 2: Jana & Semak Landasan (Track Method)
+          </span>
+          <p class="text-[11px] text-slate-600">
+            Tekan butang biru <b>"🚀 GENERATE TRACK"</b>. Landasan penukaran unit pecahan akan dibina secara automatik:
+          </p>
+          <ul class="list-disc list-inside text-[11px] text-slate-700 font-medium pl-1 space-y-0.5">
+            <li>Setiap faktor penukaran disusun dalam bentuk nombor bulat/pecahan.</li>
+            <li>Garisan merah (<span class="text-[#E11D48] font-bold">Red Strikethrough</span>) menunjukkan unit yang telah dibatalkan (cancelled units).</li>
+            <li>Pilih format nombor di sudut kanan: <i>Expanded (1000)</i> atau <i>Powers of 10 (10³)</i>.</li>
+          </ul>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-gradient-to-r from-[#E6FFFA] to-[#FEF08A]/40 p-3 rounded-xl border border-[#0D9488] flex flex-col gap-1">
+          <span class="font-black text-[#0D9488] uppercase flex items-center gap-1">
+            <span class="bg-[#0D9488] text-white px-1.5 py-0.5 rounded text-[10px]">3</span> 
+            Langkah 3: Rujuk Jawapan Akhir
+          </span>
+          <p class="text-[11px] text-slate-600">
+            Semak Seksyen 3 di bahagian bawah untuk mendapatkan keputusan:
+          </p>
+          <ul class="list-disc list-inside text-[11px] text-slate-700 font-medium pl-1 space-y-0.5">
+            <li><b>Persamaan Pendaraban:</b> Menunjukkan hasil darab semua nilai di atas dibahagikan nilai di bawah.</li>
+            <li><b>Kotak Jawapan Utama (Kanan):</b> Memaparkan nilai jawapan tepat bersama unit sasaran dan notasi piawai piawai/saintifik $(A \times 10^n)$.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="flex justify-end pt-2 border-t border-slate-200">
+        <button onclick="closeManualModal()" class="px-4 py-1.5 rounded-lg bg-[#0284C7] hover:bg-[#0369A1] text-white font-bold text-xs shadow-sm transition">
+          Faham / Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- JAVASCRIPT LOGIC -->
   <script>
+    function openManualModal() {
+      document.getElementById('manualModal').classList.remove('hidden');
+    }
+
+    function closeManualModal() {
+      document.getElementById('manualModal').classList.add('hidden');
+    }
+
     let numberFormatMode = 'expanded';
     let trackBlocks = [];
 
