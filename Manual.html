@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Viewer (1 Gambar)</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome CDN (Untuk Ikon) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b0f19;
+            color: #f1f5f9;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- BUTANG / KAD UTAMA UNTUK MENGAKTIFKAN GAMBAR -->
+    <div onclick="openModal()" class="bg-slate-900 border border-slate-800 hover:border-indigo-500 rounded-2xl p-5 text-center cursor-pointer max-w-xs w-full transition shadow-xl group">
+        <span class="text-[11px] font-extrabold text-indigo-400 uppercase tracking-widest block">MANUAL</span>
+        <h2 class="text-sm font-bold text-white mt-1 mb-4">Unit Conversion Simulator</h2>
+        
+        <button class="w-full bg-slate-800 group-hover:bg-indigo-600 text-slate-200 group-hover:text-white text-xs font-bold py-2 px-4 rounded-xl flex items-center justify-center gap-2 border border-slate-700 group-hover:border-indigo-500 transition">
+            <i class="fa-regular fa-eye"></i>
+            <span>Buka Manual</span>
+        </button>
+    </div>
+
+    <!-- TETINGKAP MODAL (LIGHTBOX) GAMBAR -->
+    <div id="imageModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-md flex flex-col justify-between p-4" onclick="closeModal()">
+        
+        <!-- BAR ATAS: BUTANG TUTUP UTAMA -->
+        <div class="max-w-5xl mx-auto w-full flex items-center justify-between bg-slate-900 border border-slate-800 p-3 rounded-2xl shadow-xl" onclick="event.stopPropagation()">
+            <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Manual Unit Conversion Simulator</span>
+            
+            <!-- BUTANG CLOSE / TUTUP -->
+            <button onclick="closeModal()" class="px-4 py-1.5 bg-rose-600 hover:bg-rose-500 text-white font-extrabold text-xs rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-rose-600/30">
+                <i class="fa-solid fa-xmark text-sm"></i>
+                <span>TUTUP</span>
+            </button>
+        </div>
+
+        <!-- BEKAS GAMBAR (MANUAL) -->
+        <div class="flex-1 w-full max-w-5xl mx-auto my-3 flex items-center justify-center p-2" onclick="event.stopPropagation()">
+            <!-- ================================================================= -->
+            <!-- TUKAR NAMA FAIL GAMBAR ANDA DI SINI (CONTOH: ManualModul1.png)    -->
+            <!-- ================================================================= -->
+            <img id="manualImage" 
+                 src="Manual.png" 
+                 alt="Manual Modul" 
+                 class="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl border border-slate-800"
+                 onerror="this.onerror=null; this.src='https://placehold.co/1000x700/0f172a/6366f1?text=Sila+Masukkan+Fail+Gambar+Anda';">
+        </div>
+
+        <!-- BAR BAWAH: BUTANG TUTUP SEKUNDER -->
+        <div class="max-w-5xl mx-auto w-full text-center" onclick="event.stopPropagation()">
+            <button onclick="closeModal()" class="px-4 py-1.5 bg-slate-900 hover:bg-slate-800 text-slate-300 font-semibold text-xs border border-slate-800 rounded-xl transition inline-flex items-center gap-1.5">
+                <i class="fa-solid fa-circle-xmark text-rose-400"></i> Klik Untuk Tutup
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // Fungsi Buka Modal Gambar
+        function openModal() {
+            document.getElementById('imageModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Kunci scroll latar belakang
+        }
+
+        // Fungsi Tutup Modal Gambar
+        function closeModal() {
+            document.getElementById('imageModal').classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Pulihkan scroll
+        }
+
+        // Tutup jika tekan butang ESC pada keyboard
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+
+</body>
+</html>
