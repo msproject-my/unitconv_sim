@@ -233,7 +233,7 @@
 
         <!-- Action Buttons -->
         <div class="flex items-center gap-1.5 ml-auto">
-          <button onclick="Manual.html()" class="px-2.5 py-1 rounded-lg bg-[#0D9488] hover:bg-[#0F766E] text-white text-[10px] font-bold shadow-sm transition flex items-center gap-1 cursor-pointer">
+          <button onclick="openManualImage()" class="px-2.5 py-1 rounded-lg bg-[#0D9488] hover:bg-[#0F766E] text-white text-[10px] font-bold shadow-sm transition flex items-center gap-1 cursor-pointer">
             📖 Manual
           </button>
           <button onclick="resetInputs()" class="px-2.5 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-[#1E293B] text-[10px] font-bold transition">
@@ -339,97 +339,25 @@
 
   <!-- Footer -->
   <footer class="my-0.5 text-center text-[10px] text-[#1E293B]/70 font-bold">
-    <p>Unit Conversion Simulator • Unit Sains JMSK, PPD</p>
+    <p>Unit Conversion Simulator • Soft Infographic Pastel Theme</p>
   </footer>
 
-  <!-- User Manual Modal -->
-  <div id="manualModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-3 md:p-6">
-    <div class="bg-white border-2 border-[#0D9488] rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 md:p-6 shadow-2xl relative flex flex-col gap-4">
-      
-      <!-- Modal Header -->
-      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-        <div class="flex items-center gap-2">
-          <span class="text-xl">📖</span>
-          <h2 class="text-base md:text-lg font-black text-[#0284C7] uppercase tracking-tight">Panduan Pengguna / User Manual</h2>
-        </div>
-        <button onclick="closeManualModal()" class="w-7 h-7 flex items-center justify-center rounded-full bg-slate-100 hover:bg-rose-100 text-slate-500 hover:text-rose-600 font-bold text-sm transition">
-          ✕
-        </button>
+  <!-- Manual Image Modal Viewer -->
+  <div id="manualImageModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center hidden p-3 md:p-6 cursor-pointer select-none" onclick="closeManualImage()">
+    <div class="relative max-w-4xl max-h-[92vh] bg-white p-2 md:p-3 rounded-2xl shadow-2xl overflow-hidden flex flex-col items-center">
+      <div class="w-full flex justify-between items-center px-3 py-1.5 bg-slate-100 rounded-t-xl mb-2 text-slate-700 text-xs font-black uppercase tracking-wide">
+        <span class="flex items-center gap-1.5">📖 Panduan Pengguna / User Guide</span>
+        <button class="bg-rose-500 hover:bg-rose-600 text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold transition">Tutup ✕</button>
       </div>
-
-      <!-- Modal Body (Steps) -->
-      <div class="flex flex-col gap-3 text-xs text-[#1E293B] leading-relaxed">
-        
-        <!-- Step 1 -->
-        <div class="bg-[#FFF8E7] p-3 rounded-xl border border-[#F97316]/30 flex flex-col gap-1">
-          <span class="font-black text-[#0284C7] uppercase flex items-center gap-1">
-            <span class="bg-[#0284C7] text-white px-1.5 py-0.5 rounded text-[10px]">1</span> 
-            Langkah 1: Masukkan Soalan (Fill-in-the-Blanks)
-          </span>
-          <p class="text-[11px] text-slate-600">
-            Isikan petak kosong soalan di Seksyen 1 dari kiri ke kanan:
-          </p>
-          <ul class="list-disc list-inside text-[11px] text-slate-700 font-medium pl-1 space-y-0.5">
-            <li><b>Value:</b> Nilai nombor soalan (cth: <code class="bg-white px-1 rounded border">20</code>, <code class="bg-white px-1 rounded border">100</code>).</li>
-            <li><b>Original Unit & Power:</b> Unit bahagian atas & kuasanya (cth: <code class="bg-white px-1 rounded border">N</code>, <code class="bg-white px-1 rounded border">1</code> atau <code class="bg-white px-1 rounded border">μm</code>).</li>
-            <li><b>Bottom Unit & Power:</b> Unit bahagian bawah (jika ada, cth: <code class="bg-white px-1 rounded border">m</code>, <code class="bg-white px-1 rounded border">2</code>).</li>
-            <li><b>Target Top & Bottom:</b> Unit sasaran yang ingin ditukar (cth: <code class="bg-white px-1 rounded border">kN/m²</code>).</li>
-          </ul>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="bg-[#FFF8E7]/60 p-3 rounded-xl border border-[#0D9488]/30 flex flex-col gap-1">
-          <span class="font-black text-[#0D9488] uppercase flex items-center gap-1">
-            <span class="bg-[#0D9488] text-white px-1.5 py-0.5 rounded text-[10px]">2</span> 
-            Langkah 2: Jana & Semak Landasan (Track Method)
-          </span>
-          <p class="text-[11px] text-slate-600">
-            Tekan butang biru <b>"🚀 GENERATE TRACK"</b>. Landasan penukaran unit pecahan akan dibina secara automatik:
-          </p>
-          <ul class="list-disc list-inside text-[11px] text-slate-700 font-medium pl-1 space-y-0.5">
-            <li>Setiap faktor penukaran disusun dalam bentuk nombor bulat/pecahan.</li>
-            <li>Garisan merah (<span class="text-[#E11D48] font-bold">Red Strikethrough</span>) menunjukkan unit yang telah dibatalkan (cancelled units).</li>
-            <li>Pilih format nombor di sudut kanan: <i>Expanded (1000)</i> atau <i>Powers of 10 (10³)</i>.</li>
-          </ul>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="bg-gradient-to-r from-[#E6FFFA] to-[#FEF08A]/40 p-3 rounded-xl border border-[#0D9488] flex flex-col gap-1">
-          <span class="font-black text-[#0D9488] uppercase flex items-center gap-1">
-            <span class="bg-[#0D9488] text-white px-1.5 py-0.5 rounded text-[10px]">3</span> 
-            Langkah 3: Rujuk Jawapan Akhir
-          </span>
-          <p class="text-[11px] text-slate-600">
-            Semak Seksyen 3 di bahagian bawah untuk mendapatkan keputusan:
-          </p>
-          <ul class="list-disc list-inside text-[11px] text-slate-700 font-medium pl-1 space-y-0.5">
-            <li><b>Persamaan Pendaraban:</b> Menunjukkan hasil darab semua nilai di atas dibahagikan nilai di bawah.</li>
-            <li><b>Kotak Jawapan Utama (Kanan):</b> Memaparkan nilai jawapan tepat bersama unit sasaran dan notasi piawai piawai/saintifik $(A \times 10^n)$.</li>
-          </ul>
-        </div>
-
-      </div>
-
-      <!-- Modal Footer -->
-      <div class="flex justify-end pt-2 border-t border-slate-200">
-        <button onclick="closeManualModal()" class="px-4 py-1.5 rounded-lg bg-[#0284C7] hover:bg-[#0369A1] text-white font-bold text-xs shadow-sm transition">
-          Faham / Close
-        </button>
-      </div>
-
+      <img src="images/Manual.png" 
+           alt="Manual Guide Image" 
+           onerror="this.onerror=null; this.src='https://placehold.co/800x600/FFF8E7/0284C7?text=Panduan+Pengguna+Simulator+Penukaran+Unit';"
+           class="max-w-full max-h-[82vh] object-contain rounded-xl border-2 border-slate-200">
     </div>
   </div>
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    function openManualModal() {
-      document.getElementById('manualModal').classList.remove('hidden');
-    }
-
-    function closeManualModal() {
-      document.getElementById('manualModal').classList.add('hidden');
-    }
-
     let numberFormatMode = 'expanded';
     let trackBlocks = [];
 
@@ -449,18 +377,27 @@
     ];
 
     const metricPowers = {
+      'Tera': 12, 'Giga': 9, 'Mega': 6, 'kilo': 3, 'hecto': 2, 'deca': 1,
       'T': 12, 'G': 9, 'M': 6, 'k': 3, 'h': 2, 'da': 1,
       '': 0,
-      'd': -1, 'c': -2, 'm': -3, 'u': -6, 'μ': -6, 'n': -9, 'p': -12
+      'd': -1, 'c': -2, 'm': -3, 'u': -6, 'μ': -6, 'micro': -6, 'n': -9, 'p': -12
     };
 
     const timeUnits = {
-      's': 1, 'sec': 1,
-      'min': 60,
-      'h': 3600, 'hr': 3600,
-      'd': 86400, 'day': 86400,
-      'y': 31536000, 'year': 31536000
+      's': 1, 'sec': 1, 'saat': 1,
+      'min': 60, 'minit': 60,
+      'h': 3600, 'hr': 3600, 'jam': 3600,
+      'd': 86400, 'day': 86400, 'hari': 86400,
+      'y': 31536000, 'year': 31536000, 'tahun': 31536000
     };
+
+    function openManualImage() {
+      document.getElementById('manualImageModal').classList.remove('hidden');
+    }
+
+    function closeManualImage() {
+      document.getElementById('manualImageModal').classList.add('hidden');
+    }
 
     function formatPower(pow) {
       if (!pow || pow == '1') return '';
@@ -480,16 +417,24 @@
     function parseUnitPrefix(unitStr) {
       if (!unitStr) return { prefix: '', base: '' };
       unitStr = unitStr.trim();
+
+      let lower = unitStr.toLowerCase();
+      if (lower === 'micrometer' || lower === 'micrometers' || lower === 'micron' || lower === 'microns') {
+        return { prefix: 'μ', base: 'm', isTime: false };
+      }
       
       if (timeUnits[unitStr.toLowerCase()]) {
         return { prefix: '', base: unitStr.toLowerCase(), isTime: true };
       }
 
-      for (let p in metricPowers) {
-        if (p !== '' && unitStr.startsWith(p)) {
+      let prefixes = Object.keys(metricPowers).filter(p => p !== '').sort((a, b) => b.length - a.length);
+
+      for (let p of prefixes) {
+        if (unitStr.startsWith(p)) {
           let rest = unitStr.slice(p.length);
-          if (['N', 'Pa', 'J', 'W', 'g', 'L', 'l', 'm', 'B', 'Hz', 's'].includes(rest)) {
-            return { prefix: p, base: rest, isTime: rest === 's' };
+          if (['N', 'Pa', 'J', 'W', 'g', 'L', 'l', 'm', 'B', 'Hz', 's', 'meter', 'meters', 'gram', 'grams', 'liter', 'liters'].includes(rest) || rest === '') {
+            let baseUnit = ['meter', 'meters'].includes(rest) ? 'm' : (['gram', 'grams'].includes(rest) ? 'g' : (['liter', 'liters'].includes(rest) ? 'L' : rest));
+            return { prefix: p, base: baseUnit || 'm', isTime: rest === 's' };
           }
         }
       }
@@ -691,7 +636,7 @@
               for (let r = 0; r < pNum; r++) {
                 trackBlocks.push({
                   topVal: formatIntPower10Val(valNum), topUnit: fromUnit, topPower: '1',
-                  botVal: '1', botUnit: parsedFrom.base, botPower: '1',
+                  botVal: '1', botUnit: parsedFrom.base, topPower: '1',
                   rawTopNum: valNum, rawBotNum: 1
                 });
               }
@@ -862,12 +807,12 @@
     function setNumberFormat(fmt) {
       numberFormatMode = fmt;
       document.getElementById('btnFormatExpanded').className = fmt === 'expanded' 
-        ? 'px-3 py-1 rounded-lg font-bold bg-[#0284C7] text-white transition' 
-        : 'px-3 py-1 rounded-lg font-bold text-[#1E293B]/70 hover:text-[#0284C7] transition';
+        ? 'px-2 py-0.5 rounded font-bold text-[10px] bg-[#0284C7] text-white transition' 
+        : 'px-2 py-0.5 rounded font-bold text-[10px] text-[#1E293B]/70 hover:text-[#0284C7] transition';
       
       document.getElementById('btnFormatExponent').className = fmt === 'exponent' 
-        ? 'px-3 py-1 rounded-lg font-bold bg-[#0284C7] text-white transition' 
-        : 'px-3 py-1 rounded-lg font-bold text-[#1E293B]/70 hover:text-[#0284C7] transition';
+        ? 'px-2 py-0.5 rounded font-bold text-[10px] bg-[#0284C7] text-white transition' 
+        : 'px-2 py-0.5 rounded font-bold text-[10px] text-[#1E293B]/70 hover:text-[#0284C7] transition';
 
       generateTrackFromInputs();
     }
@@ -881,8 +826,7 @@
 
       document.getElementById('targetUnitTop').value = tTop;
       document.getElementById('targetPowerTop').value = tPowTop;
-      document.getElementById('targetUnitBot').value = tBot;
-      document.getElementById('targetPowerBot').value = tPowBot;
+      document.getElementById('targetUnitBot').value = tPowBot;
 
       generateTrackFromInputs();
     }
@@ -900,15 +844,6 @@
       document.getElementById('targetPowerBot').value = '';
 
       trackBlocks = [];
-      renderTrack();
-    }
-
-    function addCustomBlock() {
-      trackBlocks.push({
-        topVal: '1', topUnit: 'kN', topPower: '1',
-        botVal: '1000', botUnit: 'N', topPower: '1',
-        rawTopNum: 1, rawBotNum: 1000
-      });
       renderTrack();
     }
 
