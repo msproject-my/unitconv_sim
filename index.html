@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unit Conversion Simulator (Railroad Track Method)</title>
+  <title>Unit Conversion Simulator (Railroad Track Method) - Engineering Toolkit</title>
+  
+  <!-- Meta tag perlindungan framing / clickjacking asas -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noarchive, noindex">
+
+  <!-- Open Graph Metadata -->
+  <meta property="og:title" content="Unit Conversion Simulator (Railroad Track Method)" />
+  <meta property="og:description" content="Precision SI Prefixes and Unit Conversion Simulator for Engineering by MOHDSAIFULPAHRUDIN." />
+  <meta property="og:type" content="website" />
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts -->
@@ -12,6 +22,34 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   
   <style>
+    /* ========================================================= */
+    /* CIRI KESELAMATAN CSS: SEKAT SELEKSI TEKS & DRAG IMEJ      */
+    /* ========================================================= */
+    * {
+      box-sizing: border-box;
+      /* Menghalang teks disorot untuk disalin */
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    /* Membenarkan pengguna menaip dan memilih teks dalam kotak input */
+    input {
+      -webkit-user-select: auto !important;
+      -moz-user-select: auto !important;
+      -ms-user-select: auto !important;
+      user-select: auto !important;
+    }
+
+    /* Menghalang imej daripada ditarik keluar (drag and drop) */
+    img:not(.allow-interaction) {
+      -webkit-user-drag: none;
+      user-drag: none;
+      pointer-events: none;
+    }
+
     /* Soft Vintage Infographic Color Palette */
     :root {
       --bg-pastel: #FFF8E7; /* Soft Pastel Cream */
@@ -85,9 +123,67 @@
       transform: rotate(-14deg);
       border-radius: 2px;
     }
+
+    /* Lencana Keselamatan */
+    .badge-secure {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #E2E8F0;
+      color: #475569;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    /* Toast Amaran Keselamatan */
+    .toast-warning {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(30, 41, 59, 0.96);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 99999;
+    }
+    .toast-warning.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    .toast-warning svg {
+      width: 18px;
+      height: 18px;
+      fill: #f59e0b;
+      flex-shrink: 0;
+    }
   </style>
 </head>
-<body class="h-screen max-h-screen p-2 md:p-3 flex flex-col justify-between overflow-hidden">
+<body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;" class="min-h-screen p-2 md:p-3 flex flex-col justify-between">
+
+  <!-- Top Bar: Lencana Keselamatan -->
+  <div class="w-full max-w-5xl mx-auto flex justify-end items-center mb-1.5 px-1">
+    <div class="badge-secure">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+      </svg>
+      Protected Tool
+    </div>
+  </div>
 
   <!-- Main Header -->
   <header class="w-full max-w-5xl text-center mx-auto my-0.5">
@@ -201,7 +297,6 @@
           </div>
 
         </div>
-
       </div>
 
       <!-- Control Bar -->
@@ -209,23 +304,23 @@
         <!-- Preset Example Buttons -->
         <div class="flex flex-wrap items-center gap-1">
           <span class="text-[10px] text-[#1E293B]/70 font-bold uppercase">Sample Problems:</span>
-          <button onclick="loadExample('20', 'N', '1', 'm', '2', 'kN', '1', 'm', '2')" 
+          <button type="button" onclick="loadExample('20', 'N', '1', 'm', '2', 'kN', '1', 'm', '2')" 
             class="text-[10px] px-2 py-0.5 rounded bg-[#0284C7] text-white font-bold hover:bg-[#0369A1] shadow-sm transition">
             20 N/m² ➔ kN/m²
           </button>
-          <button onclick="loadExample('98', 'kN', '1', 'm', '2', 'N', '1', 'cm', '2')" 
+          <button type="button" onclick="loadExample('98', 'kN', '1', 'm', '2', 'N', '1', 'cm', '2')" 
             class="text-[10px] px-2 py-0.5 rounded bg-white border border-[#0284C7] text-[#0284C7] font-bold hover:bg-[#FFF8E7] transition">
             98 kN/m² ➔ N/cm²
           </button>
-          <button onclick="loadExample('500', 'm', '1', 's', '2', 'km', '1', 'h', '2')" 
+          <button type="button" onclick="loadExample('500', 'm', '1', 's', '2', 'km', '1', 'h', '2')" 
             class="text-[10px] px-2 py-0.5 rounded bg-white border border-[#0284C7] text-[#0284C7] font-bold hover:bg-[#FFF8E7] transition">
             500 m/s² ➔ km/h²
           </button>
-          <button onclick="loadExample('2', 'km', '1', '', '', 'mm', '1', '', '')" 
+          <button type="button" onclick="loadExample('2', 'km', '1', '', '', 'mm', '1', '', '')" 
             class="text-[10px] px-2 py-0.5 rounded bg-white border border-[#0284C7] text-[#0284C7] font-bold hover:bg-[#FFF8E7] transition">
             2 km ➔ mm
           </button>
-          <button onclick="loadExample('100', 'um', '1', '', '', 'm', '1', '', '')" 
+          <button type="button" onclick="loadExample('100', 'um', '1', '', '', 'm', '1', '', '')" 
             class="text-[10px] px-2 py-0.5 rounded bg-white border border-[#0284C7] text-[#0284C7] font-bold hover:bg-[#FFF8E7] transition">
             100 μm ➔ m
           </button>
@@ -233,13 +328,13 @@
 
         <!-- Action Buttons -->
         <div class="flex items-center gap-1.5 ml-auto">
-          <button onclick="openManualImage()" class="px-2.5 py-1 rounded-lg bg-[#0D9488] hover:bg-[#0F766E] text-white text-[10px] font-bold shadow-sm transition flex items-center gap-1 cursor-pointer">
+          <button type="button" onclick="openManualImage()" class="px-2.5 py-1 rounded-lg bg-[#0D9488] hover:bg-[#0F766E] text-white text-[10px] font-bold shadow-sm transition flex items-center gap-1 cursor-pointer">
             📖 Manual
           </button>
-          <button onclick="resetInputs()" class="px-2.5 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-[#1E293B] text-[10px] font-bold transition">
+          <button type="button" onclick="resetInputs()" class="px-2.5 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-[#1E293B] text-[10px] font-bold transition">
             🧹 Clear
           </button>
-          <button onclick="generateTrackFromInputs()" class="px-3.5 py-1 rounded-lg bg-[#0284C7] hover:bg-[#0369A1] text-white font-extrabold text-[11px] shadow-md active:scale-95 transition flex items-center gap-1 uppercase tracking-wide">
+          <button type="button" onclick="generateTrackFromInputs()" class="px-3.5 py-1 rounded-lg bg-[#0284C7] hover:bg-[#0369A1] text-white font-extrabold text-[11px] shadow-md active:scale-95 transition flex items-center gap-1 uppercase tracking-wide">
             <span>🚀 Generate Track</span>
           </button>
         </div>
@@ -256,10 +351,10 @@
         <!-- Track Number Display Toggle -->
         <div class="flex items-center gap-1 bg-white p-0.5 rounded-lg border border-[#0284C7]/30 text-[10px] shadow-sm">
           <span class="text-[#1E293B]/70 px-1.5 font-bold text-[10px]">Format:</span>
-          <button id="btnFormatExpanded" onclick="setNumberFormat('expanded')" class="px-2 py-0.5 rounded font-bold text-[10px] bg-[#0284C7] text-white transition">
+          <button type="button" id="btnFormatExpanded" onclick="setNumberFormat('expanded')" class="px-2 py-0.5 rounded font-bold text-[10px] bg-[#0284C7] text-white transition">
             Expanded (1000)
           </button>
-          <button id="btnFormatExponent" onclick="setNumberFormat('exponent')" class="px-2 py-0.5 rounded font-bold text-[10px] text-[#1E293B]/70 hover:text-[#0284C7] transition">
+          <button type="button" id="btnFormatExponent" onclick="setNumberFormat('exponent')" class="px-2 py-0.5 rounded font-bold text-[10px] text-[#1E293B]/70 hover:text-[#0284C7] transition">
             Powers of 10 (10³)
           </button>
         </div>
@@ -337,28 +432,37 @@
 
   </main>
 
-  <!-- Footer -->
-  <footer class="my-0.5 text-center text-[10px] text-[#1E293B]/70 font-bold">
-    <p>Unit Conversion Simulator • Soft Infographic Pastel Theme</p>
+  <!-- Footer Rasmi dengan Hak Cipta MOHDSAIFULPAHRUDIN -->
+  <footer class="my-1 text-center text-[10.5px] text-[#1E293B]/70 font-semibold">
+    <p>&copy; 2026 Engineering Measurement Toolkit by <strong>MOHDSAIFULPAHRUDIN</strong>. All rights reserved. Proprietary and confidential.</p>
   </footer>
 
-  <!-- Manual Image Modal Viewer -->
-
-  <div id="manualImageModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center hidden p-3 md:p-6 cursor-pointer select-none" onclick="closeManualImage()">
-    <div class="relative max-w-4xl max-h-[92vh] bg-white p-2 md:p-3 rounded-2xl shadow-2xl overflow-hidden flex flex-col items-center">
+  <!-- Modal Panduan Pengguna / User Guide Image -->
+  <div id="manualImageModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center hidden p-3 md:p-6 select-none" onclick="closeManualImage()">
+    <div class="relative max-w-4xl max-h-[92vh] bg-white p-2 md:p-3 rounded-2xl shadow-2xl overflow-hidden flex flex-col items-center" onclick="event.stopPropagation()">
       <div class="w-full flex justify-between items-center px-3 py-1.5 bg-slate-100 rounded-t-xl mb-2 text-slate-700 text-xs font-black uppercase tracking-wide">
         <span class="flex items-center gap-1.5">📖 Panduan Pengguna / User Guide</span>
-        <button class="bg-rose-500 hover:bg-rose-600 text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold transition">Tutup ✕</button>
+        <button type="button" onclick="closeManualImage()" class="bg-rose-500 hover:bg-rose-600 text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold transition">Tutup ✕</button>
       </div>
       <img src="UCManual.png" 
            alt="Manual Guide Image" 
-           onerror="this.onerror=null; this.src='https://placehold.co/800x600/FFF8E7/0284C7?text=Panduan+Pengguna+Simulator+Penukaran+Unit';"
-           class="max-w-full max-h-[82vh] object-contain rounded-xl border-2 border-slate-200">
+           class="max-w-full max-h-[80vh] object-contain rounded-xl border-2 border-slate-200 allow-interaction"
+           onerror="this.onerror=null; this.src='https://placehold.co/800x600/FFF8E7/0284C7?text=Panduan+Pengguna+Simulator+Penukaran+Unit';">
     </div>
   </div>
 
-  <!-- JAVASCRIPT LOGIC -->
+  <!-- UI Toast untuk amaran keselamatan -->
+  <div id="securityToast" class="toast-warning" role="alert" aria-live="assertive">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+    </svg>
+    <span>Content & code are protected by copyright. Action disabled.</span>
+  </div>
+
   <script>
+    /* ========================================================================= */
+    /* 1. LOGIK PENUKARAN UNIT (RAILROAD TRACK METHOD)                            */
+    /* ========================================================================= */
     let numberFormatMode = 'expanded';
     let trackBlocks = [];
 
@@ -443,38 +547,42 @@
     }
 
     function generateTrackFromInputs() {
-      const numVal = parseFloat(document.getElementById('inputNum').value) || 0;
-      
-      const uTop = document.getElementById('inputUnitTop').value.trim();
-      const pTop = document.getElementById('inputPowerTop').value.trim() || '1';
-      const uBot = document.getElementById('inputUnitBot').value.trim();
-      const pBot = document.getElementById('inputPowerBot').value.trim() || '1';
+      try {
+        const numVal = parseFloat(document.getElementById('inputNum').value) || 0;
+        
+        const uTop = document.getElementById('inputUnitTop').value.trim();
+        const pTop = document.getElementById('inputPowerTop').value.trim() || '1';
+        const uBot = document.getElementById('inputUnitBot').value.trim();
+        const pBot = document.getElementById('inputPowerBot').value.trim() || '1';
 
-      const tTop = document.getElementById('targetUnitTop').value.trim();
-      const tPowerTop = document.getElementById('targetPowerTop').value.trim() || '1';
-      const tBot = document.getElementById('targetUnitBot').value.trim();
-      const tPowerBot = document.getElementById('targetPowerBot').value.trim() || '1';
+        const tTop = document.getElementById('targetUnitTop').value.trim();
+        const tPowerTop = document.getElementById('targetPowerTop').value.trim() || '1';
+        const tBot = document.getElementById('targetUnitBot').value.trim();
+        const tPowerBot = document.getElementById('targetPowerBot').value.trim() || '1';
 
-      trackBlocks = [];
+        trackBlocks = [];
 
-      trackBlocks.push({
-        numVal: numVal,
-        topUnit: uTop,
-        topPower: pTop,
-        botUnit: uBot,
-        botPower: pBot,
-        isInitial: true
-      });
+        trackBlocks.push({
+          numVal: numVal,
+          topUnit: uTop,
+          topPower: pTop,
+          botUnit: uBot,
+          botPower: pBot,
+          isInitial: true
+        });
 
-      if (uTop && tTop && (uTop !== tTop || pTop !== tPowerTop)) {
-        createOrderedSteps(uTop, pTop, tTop, tPowerTop, 'top');
+        if (uTop && tTop && (uTop !== tTop || pTop !== tPowerTop)) {
+          createOrderedSteps(uTop, pTop, tTop, tPowerTop, 'top');
+        }
+
+        if (uBot && tBot && (uBot !== tBot || pBot !== tPowerBot)) {
+          createOrderedSteps(uBot, pBot, tBot, tPowerBot, 'bot');
+        }
+
+        renderTrack();
+      } catch (err) {
+        console.warn("Track generation handled gracefully:", err);
       }
-
-      if (uBot && tBot && (uBot !== tBot || pBot !== tPowerBot)) {
-        createOrderedSteps(uBot, pBot, tBot, tPowerBot, 'bot');
-      }
-
-      renderTrack();
     }
 
     function createOrderedSteps(fromUnit, fromPow, toUnit, toPow, position) {
@@ -827,7 +935,8 @@
 
       document.getElementById('targetUnitTop').value = tTop;
       document.getElementById('targetPowerTop').value = tPowTop;
-      document.getElementById('targetUnitBot').value = tPowBot;
+      document.getElementById('targetUnitBot').value = tBot;
+      document.getElementById('targetPowerBot').value = tPowBot;
 
       generateTrackFromInputs();
     }
@@ -851,6 +960,98 @@
     window.onload = function() {
       generateTrackFromInputs();
     };
+
+    /* ========================================================================= */
+    /* 2. FRAME-BUSTING: Menghalang embed dalam iframe luar                      */
+    /* ========================================================================= */
+    try {
+      if (window.top !== window.self) {
+        window.top.location = window.self.location;
+      }
+    } catch (e) {
+      console.warn("Iframe embedding detection triggered.");
+    }
+
+    /* ========================================================================= */
+    /* 3. SISTEM NOTIFIKASI KESELAMATAN (Ganti alert bawaan browser)             */
+    /* ========================================================================= */
+    let toastTimeout;
+    function notifySecurityBreach(customMessage) {
+      const toast = document.getElementById('securityToast');
+      if (customMessage) {
+        toast.querySelector('span').textContent = customMessage;
+      }
+      toast.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    /* ========================================================================= */
+    /* 4. SEKAT KLIK KANAN (Context Menu)                                        */
+    /* ========================================================================= */
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      notifySecurityBreach("Right-click is disabled to protect intellectual property.");
+      return false;
+    });
+
+    /* ========================================================================= */
+    /* 5. SEKAT SHORTCUT DEVTOOLS, INSPECT, VIEW-SOURCE, & SAVE                  */
+    /* ========================================================================= */
+    document.addEventListener('keydown', function(e) {
+      // F12 (DevTools)
+      if (e.key === 'F12' || e.keyCode === 123) {
+        e.preventDefault();
+        notifySecurityBreach("Developer tools access is restricted.");
+        return false;
+      }
+
+      // Ctrl+Shift+I (Inspect), Ctrl+Shift+J (Console), Ctrl+Shift+C (Element selector)
+      if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) {
+        e.preventDefault();
+        notifySecurityBreach("Inspect Element is disabled.");
+        return false;
+      }
+
+      // Ctrl+U (View Page Source)
+      if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+        e.preventDefault();
+        notifySecurityBreach("Viewing source code is disabled.");
+        return false;
+      }
+
+      // Ctrl+S (Simpan laman web)
+      if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
+        e.preventDefault();
+        notifySecurityBreach("Saving this page is disabled.");
+        return false;
+      }
+
+      // Ctrl+C (Menyalin jika berada di luar medan input)
+      if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) {
+        const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+        if (activeTag !== 'input' && activeTag !== 'textarea') {
+          e.preventDefault();
+          notifySecurityBreach("Copying content is disabled.");
+          return false;
+        }
+      }
+    });
+
+    /* ========================================================================= */
+    /* 6. AMARAN KONSOL JIKA SESEORANG MEMBUKA DEVTOOLS                          */
+    /* ========================================================================= */
+    console.clear();
+    console.log(
+      "%cSTOP! HAK CIPTA TERPELIHARA.",
+      "color: #ef4444; font-size: 24px; font-weight: bold; -webkit-text-stroke: 1px black;"
+    );
+    console.log(
+      "%cSebarang penyalinan, pengubahsuaian, atau pengedaran kod ini tanpa kebenaran MOHDSAIFULPAHRUDIN adalah dilarang sama sekali.",
+      "color: #334155; font-size: 13px; font-weight: 600;"
+    );
   </script>
 </body>
 </html>
