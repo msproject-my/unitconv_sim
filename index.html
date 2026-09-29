@@ -532,12 +532,20 @@
         return { prefix: '', base: unitStr.toLowerCase(), isTime: true };
       }
 
+      // Senarai unit asas tunggal - jika input sepadan tepat, jangan pisahkan sebagai imbuhan
+      const standardBaseUnits = ['m', 'meter', 'meters', 'g', 'gram', 'grams', 's', 'sec', 'N', 'Pa', 'J', 'W', 'L', 'l', 'Hz', 'B', 'V', 'A', 'mol', 'cd', 'K'];
+      if (standardBaseUnits.includes(unitStr)) {
+        let normalizedBase = ['meter', 'meters'].includes(unitStr) ? 'm' : (['gram', 'grams'].includes(unitStr) ? 'g' : (['liter', 'liters'].includes(unitStr) ? 'L' : unitStr));
+        return { prefix: '', base: normalizedBase, isTime: normalizedBase === 's' || normalizedBase === 'sec' };
+      }
+
       let prefixes = Object.keys(metricPowers).filter(p => p !== '').sort((a, b) => b.length - a.length);
 
       for (let p of prefixes) {
         if (unitStr.startsWith(p)) {
           let rest = unitStr.slice(p.length);
-          if (['N', 'Pa', 'J', 'W', 'g', 'L', 'l', 'm', 'B', 'Hz', 's', 'meter', 'meters', 'gram', 'grams', 'liter', 'liters'].includes(rest) || rest === '') {
+          // Baki huruf (rest) MESTILAH unit asas yang sah dan bukan string kosong
+          if (rest !== '' && (['N', 'Pa', 'J', 'W', 'g', 'L', 'l', 'm', 'B', 'Hz', 's', 'V', 'A', 'meter', 'meters', 'gram', 'grams', 'liter', 'liters'].includes(rest))) {
             let baseUnit = ['meter', 'meters'].includes(rest) ? 'm' : (['gram', 'grams'].includes(rest) ? 'g' : (['liter', 'liters'].includes(rest) ? 'L' : rest));
             return { prefix: p, base: baseUnit || 'm', isTime: rest === 's' };
           }
