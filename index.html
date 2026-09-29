@@ -36,7 +36,7 @@
     }
 
     /* Membenarkan pengguna menaip dan memilih teks dalam kotak input */
-    input {
+    input, select {
       -webkit-user-select: auto !important;
       -moz-user-select: auto !important;
       -ms-user-select: auto !important;
@@ -175,8 +175,13 @@
 </head>
 <body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;" class="min-h-screen p-2 md:p-3 flex flex-col justify-between">
 
-  <!-- Top Bar: Lencana Keselamatan -->
+  <!-- Top Bar: Lencana Keselamatan & Profil Pengguna -->
   <div class="w-full max-w-5xl mx-auto flex justify-end items-center mb-1.5 px-1">
+    <div id="userProfileBadge" class="hidden mr-2 items-center gap-1.5 bg-[#0284C7]/10 border border-[#0284C7]/30 text-[#0284C7] text-[10px] font-bold px-2 py-0.5 rounded-full">
+      <span>👤</span>
+      <span id="userProfileName">User</span>
+      <span class="text-[9px] text-[#475569] font-medium">(<span id="userProfileRole">Student</span>)</span>
+    </div>
     <div class="badge-secure">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
@@ -212,12 +217,12 @@
         <div class="flex flex-wrap items-center justify-center gap-1.5 md:gap-2.5 w-full text-sm md:text-base font-bold">
           <span class="text-[#0284C7] font-black text-base md:text-lg mr-0.5 uppercase">Question :</span>
 
-          <!-- Input Value (Ruangan Kotak No Soalan Dibesarkan) -->
+          <!-- Input Value (Ruangan diperbesarkan untuk kemudahan menaip) -->
           <div class="flex flex-col items-center">
             <input type="number" id="inputNum" placeholder="20" value="20" step="any"
               class="blank-input w-28 sm:w-36 md:w-44 py-1.5 px-2.5 rounded-xl font-black text-lg md:text-2xl mono shadow-md border-2"
-              title="Enter question value / nombor soalan">
-            <span class="text-[10px] text-[#0284C7] mt-0.5 font-bold uppercase tracking-wider">[ Value / Nombor ]</span>
+              title="Enter question value">
+            <span class="text-[10px] text-[#0284C7] mt-0.5 font-bold uppercase tracking-wider">[ Value / Number ]</span>
           </div>
 
           <!-- Top Unit (Original) -->
@@ -441,13 +446,13 @@
   <div id="manualImageModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center hidden p-3 md:p-6 select-none" onclick="closeManualImage()">
     <div class="relative max-w-4xl max-h-[92vh] bg-white p-2 md:p-3 rounded-2xl shadow-2xl overflow-hidden flex flex-col items-center" onclick="event.stopPropagation()">
       <div class="w-full flex justify-between items-center px-3 py-1.5 bg-slate-100 rounded-t-xl mb-2 text-slate-700 text-xs font-black uppercase tracking-wide">
-        <span class="flex items-center gap-1.5">📖 Panduan Pengguna / User Guide</span>
-        <button type="button" onclick="closeManualImage()" class="bg-rose-500 hover:bg-rose-600 text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold transition">Tutup ✕</button>
+        <span class="flex items-center gap-1.5">📖 User Guide</span>
+        <button type="button" onclick="closeManualImage()" class="bg-rose-500 hover:bg-rose-600 text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold transition">Close ✕</button>
       </div>
       <img src="UCManual.png" 
            alt="Manual Guide Image" 
            class="max-w-full max-h-[80vh] object-contain rounded-xl border-2 border-slate-200 allow-interaction"
-           onerror="this.onerror=null; this.src='https://placehold.co/800x600/FFF8E7/0284C7?text=Panduan+Pengguna+Simulator+Penukaran+Unit';">
+           onerror="this.onerror=null; this.src='https://placehold.co/800x600/FFF8E7/0284C7?text=Unit+Conversion+Simulator+User+Guide';">
     </div>
   </div>
 
@@ -457,6 +462,68 @@
       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
     </svg>
     <span>Content & code are protected by copyright. Action disabled.</span>
+  </div>
+
+  <!-- MODAL POPUP LOG MASUK (USER LOGIN) -->
+  <div id="loginModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-3 select-none">
+    <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-5 border border-slate-200">
+      
+      <!-- Simple Title -->
+      <div class="text-center mb-3">
+        <h2 class="text-lg font-black text-[#1E293B] uppercase tracking-wide">
+          User Login
+        </h2>
+      </div>
+
+      <!-- Login Form -->
+      <form id="userLoginForm" onsubmit="handleUserLogin(event)" class="space-y-3">
+        
+        <!-- 1. Full Name Input -->
+        <div>
+          <label for="loginFullName" class="block text-[11px] font-bold text-slate-600 uppercase mb-1">
+            Full Name <span class="text-rose-500">*</span>
+          </label>
+          <input type="text" id="loginFullName" required placeholder="Enter full name"
+            class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-[#0284C7] focus:ring-1 focus:ring-[#0284C7] outline-none text-sm font-semibold text-slate-800 transition">
+        </div>
+
+        <!-- 2. Role Dropdown -->
+        <div>
+          <label for="loginRole" class="block text-[11px] font-bold text-slate-600 uppercase mb-1">
+            Role <span class="text-rose-500">*</span>
+          </label>
+          <select id="loginRole" onchange="toggleStudentIdVisibility()" required
+            class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-[#0284C7] focus:ring-1 focus:ring-[#0284C7] outline-none text-sm font-bold text-slate-800 transition bg-white cursor-pointer">
+            <option value="" disabled selected>-- Select Role --</option>
+            <option value="Student">Student</option>
+            <option value="Student PoliPD">Student PoliPD</option>
+            <option value="Lecturer">Lecturer</option>
+          </select>
+        </div>
+
+        <!-- 3. Student ID (Displayed when Student PoliPD is selected) -->
+        <div id="studentIdWrapper" class="hidden">
+          <label for="loginStudentId" class="block text-[11px] font-bold text-[#0D9488] uppercase mb-1">
+            Student ID / Matrix No <span class="text-rose-500">*</span>
+          </label>
+          <input type="text" id="loginStudentId" placeholder="e.g. 06DKM23F1001"
+            class="w-full px-3 py-2 rounded-lg border border-[#0D9488]/50 focus:border-[#0D9488] focus:ring-1 focus:ring-[#0D9488] outline-none text-sm font-bold text-slate-800 transition uppercase">
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-1">
+          <button type="submit" id="btnSubmitLogin"
+            class="w-full py-2 px-4 rounded-lg bg-[#0284C7] hover:bg-[#0369A1] text-white font-extrabold text-sm shadow transition flex items-center justify-center gap-2 cursor-pointer">
+            <span id="loginBtnText">Login</span>
+            <svg id="loginSpinner" class="hidden animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+            </svg>
+          </button>
+        </div>
+
+      </form>
+    </div>
   </div>
 
   <script>
@@ -519,6 +586,7 @@
       return num.toLocaleString('en-US').replace(/,/g, '');
     }
 
+    /* Pengecam Unit & Imbuhan Tepat (Mencegah salah faham unit asas m / s / g) */
     function parseUnitPrefix(unitStr) {
       if (!unitStr) return { prefix: '', base: '' };
       unitStr = unitStr.trim();
@@ -967,7 +1035,118 @@
 
     window.onload = function() {
       generateTrackFromInputs();
+      checkUserLoginStatus();
     };
+
+    /* ========================================================================= */
+    /* GOOGLE SHEETS LOGIN & FORM CAPTURE INTEGRATION                            */
+    /* ========================================================================= */
+    const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzDyTsnN-RctL0q_BzxXuxBN74obfpW9eBaVjIYLnMWYVTjMpDDl_bWRb8hy6SdIakDGg/exec";
+
+    function toggleStudentIdVisibility() {
+      const role = document.getElementById('loginRole').value;
+      const wrapper = document.getElementById('studentIdWrapper');
+      const studentIdInput = document.getElementById('loginStudentId');
+
+      if (role === 'Student PoliPD') {
+        wrapper.classList.remove('hidden');
+        studentIdInput.setAttribute('required', 'required');
+      } else {
+        wrapper.classList.add('hidden');
+        studentIdInput.removeAttribute('required');
+        studentIdInput.value = '';
+      }
+    }
+
+    function checkUserLoginStatus() {
+      const savedUser = sessionStorage.getItem('unit_sim_user_session');
+      if (savedUser) {
+        try {
+          const userData = JSON.parse(savedUser);
+          document.getElementById('loginModal').classList.add('hidden');
+          displayUserProfile(userData.fullName, userData.role);
+        } catch (e) {
+          document.getElementById('loginModal').classList.remove('hidden');
+        }
+      } else {
+        document.getElementById('loginModal').classList.remove('hidden');
+      }
+    }
+
+    function displayUserProfile(name, role) {
+      const badge = document.getElementById('userProfileBadge');
+      const nameEl = document.getElementById('userProfileName');
+      const roleEl = document.getElementById('userProfileRole');
+
+      if (badge && nameEl && roleEl) {
+        nameEl.textContent = name;
+        roleEl.textContent = role;
+        badge.classList.remove('hidden');
+        badge.classList.add('inline-flex');
+      }
+    }
+
+    async function handleUserLogin(event) {
+      event.preventDefault();
+
+      const fullName = document.getElementById('loginFullName').value.trim();
+      const role = document.getElementById('loginRole').value;
+      const studentId = document.getElementById('loginStudentId').value.trim();
+
+      if (!fullName || !role) {
+        notifySecurityBreach("Please complete all required fields.");
+        return;
+      }
+
+      if (role === 'Student PoliPD' && !studentId) {
+        notifySecurityBreach("Please enter your PoliPD Matrix Number.");
+        return;
+      }
+
+      const btnSubmit = document.getElementById('btnSubmitLogin');
+      const btnText = document.getElementById('loginBtnText');
+      const spinner = document.getElementById('loginSpinner');
+
+      btnSubmit.disabled = true;
+      btnText.textContent = "Saving record...";
+      spinner.classList.remove('hidden');
+
+      const payload = {
+        fullName: fullName,
+        role: role,
+        studentId: role === 'Student PoliPD' ? studentId : '-',
+        device: navigator.userAgent.substring(0, 150)
+      };
+
+      // Simpan dalam sesi tempatan
+      sessionStorage.setItem('unit_sim_user_session', JSON.stringify(payload));
+
+      // Hantar rekod ke Google Sheets menggunakan text/plain (Format standard yang tidak disekat CORS preflight)
+      if (GOOGLE_SHEET_WEB_APP_URL && !GOOGLE_SHEET_WEB_APP_URL.includes("PASTE_YOUR_DEPLOYMENT_ID_HERE")) {
+        try {
+          await fetch(GOOGLE_SHEET_WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify(payload)
+          });
+        } catch (err) {
+          console.warn("Google Sheets connection error:", err);
+        }
+      }
+
+      // Selesai: Tutup modal dan paparkan profil pengguna
+      setTimeout(() => {
+        document.getElementById('loginModal').classList.add('hidden');
+        displayUserProfile(fullName, role);
+        notifySecurityBreach("Welcome, " + fullName + "!");
+        btnSubmit.disabled = false;
+        btnText.textContent = "Login";
+        spinner.classList.add('hidden');
+      }, 500);
+    }
 
     /* ========================================================================= */
     /* 2. FRAME-BUSTING: Menghalang embed dalam iframe luar                      */
