@@ -176,11 +176,16 @@
 <body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;" class="min-h-screen p-2 md:p-3 flex flex-col justify-between">
 
   <!-- Top Bar: Lencana Keselamatan & Profil Pengguna -->
-  <div class="w-full max-w-5xl mx-auto flex justify-end items-center mb-1.5 px-1">
-    <div id="userProfileBadge" class="hidden mr-2 items-center gap-1.5 bg-[#0284C7]/10 border border-[#0284C7]/30 text-[#0284C7] text-[10px] font-bold px-2 py-0.5 rounded-full">
+  <div class="w-full max-w-5xl mx-auto flex justify-end items-center mb-1.5 px-1 gap-1.5">
+    <div id="userProfileBadge" class="hidden items-center gap-1.5 bg-[#0284C7]/10 border border-[#0284C7]/30 text-[#0284C7] text-[10px] font-bold px-2 py-0.5 rounded-full">
       <span>👤</span>
       <span id="userProfileName">User</span>
       <span class="text-[9px] text-[#475569] font-medium">(<span id="userProfileRole">Student</span>)</span>
+      <!-- Butang Logout -->
+      <button type="button" onclick="handleUserLogout(true)" title="Log out from session"
+        class="ml-1 px-1.5 py-0.5 rounded-full bg-rose-500 hover:bg-rose-600 active:scale-95 text-white text-[9px] font-extrabold transition cursor-pointer flex items-center gap-0.5">
+        <span>Logout</span> ✕
+      </button>
     </div>
     <div class="badge-secure">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
@@ -1036,12 +1041,70 @@
     window.onload = function() {
       generateTrackFromInputs();
       checkUserLoginStatus();
+      initInactivityTimer();
     };
 
     /* ========================================================================= */
-    /* GOOGLE SHEETS LOGIN & FORM CAPTURE INTEGRATION                            */
+    /* GOOGLE SHEETS LOGIN, SESSION & AUTO-LOGOUT INTEGRATION                    */
     /* ========================================================================= */
     const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzDyTsnN-RctL0q_BzxXuxBN74obfpW9eBaVjIYLnMWYVTjMpDDl_bWRb8hy6SdIakDGg/exec";
+
+    // Tetapan Auto-Logout: 3 Minit (3 * 60 * 1000 milisaat)
+    const INACTIVITY_LIMIT_MS = 3 * 60 * 1000;
+    let inactivityTimer = null;
+
+    function resetInactivityTimer() {
+      // Hanya aktifkan timer sekiranya pengguna telah log masuk
+      const savedUser = sessionStorage.getItem('unit_sim_user_session');
+      if (!savedUser) {
+        if (inactivityTimer) clearTimeout(inactivityTimer);
+        return;
+      }
+
+      if (inactivityTimer) clearTimeout(inactivityTimer);
+
+      inactivityTimer = setTimeout(() => {
+        // Semak sekali lagi jika pengguna masih dalam sesi
+        if (sessionStorage.getItem('unit_sim_user_session')) {
+          handleUserLogout(false, "Session expired due to 3 minutes of inactivity.");
+        }
+      }, INACTIVITY_LIMIT_MS);
+    }
+
+    function initInactivityTimer() {
+      // Senarai acara aktiviti pengguna
+      const userActivityEvents = ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'];
+      userActivityEvents.forEach(evt => {
+        window.addEventListener(evt, resetInactivityTimer, { passive: true });
+      });
+      resetInactivityTimer();
+    }
+
+    function handleUserLogout(isManual = true, customMessage = "You have been logged out.") {
+      // Hentikan pemasa
+      if (inactivityTimer) clearTimeout(inactivityTimer);
+
+      // Buang data sesi tempatan
+      sessionStorage.removeItem('unit_sim_user_session');
+
+      // Sorok lencana profil pengguna
+      const badge = document.getElementById('userProfileBadge');
+      if (badge) {
+        badge.classList.remove('inline-flex');
+        badge.classList.add('hidden');
+      }
+
+      // Kosongkan dan reset borang login
+      const form = document.getElementById('userLoginForm');
+      if (form) form.reset();
+      toggleStudentIdVisibility();
+
+      // Paparkan semula popup modal login
+      document.getElementById('loginModal').classList.remove('hidden');
+
+      // Maklumkan pengguna melalui toast
+      notifySecurityBreach(customMessage);
+    }
 
     function toggleStudentIdVisibility() {
       const role = document.getElementById('loginRole').value;
@@ -1065,6 +1128,7 @@
           const userData = JSON.parse(savedUser);
           document.getElementById('loginModal').classList.add('hidden');
           displayUserProfile(userData.fullName, userData.role);
+          resetInactivityTimer();
         } catch (e) {
           document.getElementById('loginModal').classList.remove('hidden');
         }
@@ -1141,6 +1205,7 @@
       setTimeout(() => {
         document.getElementById('loginModal').classList.add('hidden');
         displayUserProfile(fullName, role);
+        resetInactivityTimer();
         notifySecurityBreach("Welcome, " + fullName + "!");
         btnSubmit.disabled = false;
         btnText.textContent = "Login";
